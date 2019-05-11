@@ -29,10 +29,23 @@ public class GraphicsDriver extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		final double WIDTH = 550;
+		final double HEIGHT = 550;
 		window = primaryStage;
 		window.setTitle("Welcome to Checkers");
-		final double CANVAS_WIDTH = 550;
-		final double CANVAS_HEIGHT = 550;
+		
+		window.setScene(welcome(primaryStage, WIDTH, HEIGHT));
+		window.show();
+	}
+
+	/**
+	 * Welcome menu scene, gets user's choice
+	 * @param window (stage)
+	 * @param width of the stage
+	 * @param height of the stage
+	 * @return the scene
+	 */
+	public static Scene welcome(Stage window, double width, double height) {		
 		final Image titleScreen = new Image("asset.jpg"); // title screen image
 		final ImageView flashScreen_node = new ImageView();
 		flashScreen_node.setImage(titleScreen); // set the image of the title screen
@@ -63,9 +76,7 @@ public class GraphicsDriver extends Application {
 		layout.setAlignment(Pos.CENTER);
 		StackPane root = new StackPane();
 		root.getChildren().addAll(flashScreen_node, layout);
-		Scene scene = new Scene(root, CANVAS_WIDTH, CANVAS_HEIGHT, Color.BLACK);
-		window.setScene(scene);
-		window.show();
+		Scene scene = new Scene(root, width, height, Color.BLACK);
+		return scene;
 	}
-
 }
