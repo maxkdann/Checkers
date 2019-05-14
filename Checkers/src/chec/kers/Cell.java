@@ -18,4 +18,19 @@ public class Cell {
 	public CellState getState() {
 		return state;
 	}
+	
+	public String toString() {
+		switch (state) {
+		case NOPLAY:
+			return "X";
+		case PLAY:
+			return "O";
+		case P1:
+			return "-";
+		case P2:
+			return "*";
+		default:
+			return "-";
+		}
+	}
 }

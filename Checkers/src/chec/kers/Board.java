@@ -1,22 +1,23 @@
 package chec.kers;
 
 import java.util.ArrayList;
-
+import chec.kers.CellState;
 import chec.kers.Cell;
 
 public class Board {	
 	
 	private static Cell[][] board;
-
+	CellState NOPLAY = CellState.NOPLAY;
+	CellState PLAY = CellState.PLAY;
 	
 	Board(){
 		board = new Cell[8][8];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if((i+j)%2==0) {
-					board[i][j] = new Cell(CellState.NOPLAY);
+					board[i][j] = new Cell(NOPLAY);
 				}else {
-					board[i][j] = new Cell(CellState.PLAY);
+					board[i][j] = new Cell(PLAY);
 				}
 			}
 		}
@@ -28,11 +29,11 @@ public class Board {
 			  if(i==3 || i==4) {
 				  
 			  }else if(i<3) {
-				  if(board[i][j].getState() == CellState.PLAY) {
+				  if(board[i][j].getState() == PLAY) {
 					  board[i][j].setState(CellState.P2);
 				  }
 			  }else {
-				  if(board[i][j].getState() == CellState.PLAY) {
+				  if(board[i][j].getState() == PLAY) {
 					  board[i][j].setState(CellState.P1);
 				  }
 			  }
@@ -45,12 +46,12 @@ public class Board {
 		
 		if(board[x][y].getState() == CellState.P1) {
 			if(y==0) {
-				if(board[x-1][y+1].getState() == CellState.PLAY) {
+				if(board[x-1][y+1].getState() == PLAY) {
 					moves.add(x-1);
 					moves.add(y+1);
 					return moves;
 				}else {
-					if(board[x-2][y+2].getState() == CellState.PLAY && x>1 && y<6) {
+					if(board[x-2][y+2].getState() == PLAY && x>1 && y<6) {
 						moves.add(x-2);
 						moves.add(y+2);
 						return moves;
@@ -59,12 +60,12 @@ public class Board {
 					}
 				}
 			}else if(y==7) {
-				if(board[x-1][y-1].getState() == CellState.PLAY) {
+				if(board[x-1][y-1].getState() == PLAY) {
 					moves.add(x-1);
 					moves.add(y-1);
 					return moves;
 				}else {
-					if(board[x-2][y-2].getState() == CellState.PLAY && x>1 && y>1) {
+					if(board[x-2][y-2].getState() == PLAY && x>1 && y>1) {
 						moves.add(x-2);
 						moves.add(y-2);
 						return moves;
@@ -73,8 +74,8 @@ public class Board {
 					}
 				}
 			}else {
-				if(board[x-1][y+1].getState() != CellState.PLAY && board[x-1][y+1].getState() != CellState.PLAY) {
-					if(board[x-2][y+2].getState() == CellState.PLAY) {
+				if(board[x-1][y+1].getState() != PLAY && board[x-1][y+1].getState() != PLAY) {
+					if(board[x-2][y+2].getState() == PLAY) {
 						
 					}
 				}
