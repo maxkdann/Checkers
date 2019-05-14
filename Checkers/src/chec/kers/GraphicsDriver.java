@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class GraphicsDriver extends Application {
@@ -52,24 +53,27 @@ public class GraphicsDriver extends Application {
 		window.getIcons().add(titleScreen); // stage icon
 		Label label = new Label("Please choose one of the following: ");
 		HBox hbox = new HBox();
-		Button button1 = new Button("1 Player");
-		Button button2 = new Button("2 Players");
-		button1.setOnAction(e -> {
-			boolean result = ConfirmBox.display("Verify", "You selected player vs Ai, do you wish to continue?");
-			if (result) {
-				// ai game
-				System.out.println("ai");
-			}
-		});
+		Button button2 = new Button("Start");
+		 Button roundButton = new Button();
+
+	        roundButton.setStyle(
+	                "-fx-background-radius: 5em; " +
+	                "-fx-min-width: 30px; " +
+	                "-fx-min-height: 30px; " +
+	                "-fx-max-width: 30px; " +
+	                "-fx-max-height: 30px;" +
+	                "-fx-color: FF0000"
+	        );
+
 		button2.setOnAction(e -> {
-			boolean result = ConfirmBox.display("Verify", "You selected player vs player, do you wish to continue?");
+			boolean result = ConfirmBox.display("Verify", "Are you sure you're ready to start?");
 			if (result) {
 				// 2 players
 				System.out.println("2 players");
 			}
 		});
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(button1, button2);
+		buttons.getChildren().addAll(button2, roundButton);
 		buttons.setAlignment(Pos.CENTER);
 		VBox layout = new VBox();
 		layout.getChildren().addAll(label,buttons);
