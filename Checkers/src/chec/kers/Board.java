@@ -1,5 +1,7 @@
 package chec.kers;
 
+import java.util.ArrayList;
+
 import chec.kers.Cell;
 
 public class Board {	
@@ -9,20 +11,91 @@ public class Board {
 	
 	Board(){
 		board = new Cell[8][8];
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				board[i][j] = new Cell(CellState.P1); // player 1
-			}
-		}
-		for (int i = 2; i < 6; i++) {
-			for (int j = 0; j < 8; j++) {
-				board[i][j] = new Cell(CellState.EMPTY); // no color
-			}
-		}
-		for (int i = 6; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				board[i][j] = new Cell(CellState.P2); // player 2
+				if((i+j)%2==0) {
+					board[i][j] = new Cell(CellState.NOPLAY);
+				}else {
+					board[i][j] = new Cell(CellState.PLAY);
+				}
 			}
 		}
 	}
+	
+	public void initialize() {
+	  for(int i = 0; i < 8; i++) {
+		  for(int j = 0; j<8; j++) {
+			  if(i==3 || i==4) {
+				  
+			  }else if(i<3) {
+				  if(board[i][j].getState() == CellState.PLAY) {
+					  board[i][j].setState(CellState.P2);
+				  }
+			  }else {
+				  if(board[i][j].getState() == CellState.PLAY) {
+					  board[i][j].setState(CellState.P1);
+				  }
+			  }
+		  }
+	  }
+	}
+	
+	public ArrayList<Integer> checkMoves(int x, int y) {
+		ArrayList<Integer> moves = new ArrayList<>();
+		
+		if(board[x][y].getState() == CellState.P1) {
+			if(y==0) {
+				if(board[x-1][y+1].getState() == CellState.PLAY) {
+					moves.add(x-1);
+					moves.add(y+1);
+					return moves;
+				}else {
+					if(board[x-2][y+2].getState() == CellState.PLAY && x>1 && y<6) {
+						moves.add(x-2);
+						moves.add(y+2);
+						return moves;
+					}else {
+						return moves;
+					}
+				}
+			}else if(y==7) {
+				if(board[x-1][y-1].getState() == CellState.PLAY) {
+					moves.add(x-1);
+					moves.add(y-1);
+					return moves;
+				}else {
+					if(board[x-2][y-2].getState() == CellState.PLAY && x>1 && y>1) {
+						moves.add(x-2);
+						moves.add(y-2);
+						return moves;
+					}else {
+						return moves;
+					}
+				}
+			}else {
+				if(board[x-1][y+1].getState() != CellState.PLAY && board[x-1][y+1].getState() != CellState.PLAY) {
+					if(board[x-2][y+2].getState() == CellState.PLAY) {
+						
+					}
+				}
+			}
+			
+			
+		}else if(board[x][y].getState() == CellState.P2) {
+			
+		}else {
+			return moves;
+		}
+	}
+	
+	public void display() {
+		System.out.println("BOARD");
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				System.out.printf("%s ", board[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
 }
