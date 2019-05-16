@@ -68,7 +68,6 @@ public class Board {
 	
 	public ArrayList<Integer> checkMoves(int x, int y) {
 		ArrayList<Integer> moves = new ArrayList<>();
-		
 		if(board[x][y].getState() == CellState.P1) {
 			if(y==0) {
 				if(board[x-1][y+1].getState() == PLAY) {

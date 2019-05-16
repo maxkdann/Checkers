@@ -25,7 +25,8 @@ public class GraphicsDriver extends Application {
 	private static final double BUTTON_HEIGHT = 60;
 	private static NewButton[][] slots = new NewButton[8][8];
 	private static Board board = new Board();
-	
+	final Image p1 = new Image(getClass().getResourceAsStream("redpiece30px.png"));
+	final Image p2 = new Image(getClass().getResourceAsStream("bluepiece35px.png"));
 	Stage window;
 
 	public static void main(String[] args) {
@@ -91,8 +92,7 @@ public class GraphicsDriver extends Application {
 	}
 	
 	public Scene initBoard() {
-		final Image p1 = new Image(getClass().getResourceAsStream("redpiece30px.png"));
-		final Image p2 = new Image(getClass().getResourceAsStream("bluepiece35px.png"));
+		int turn = 1;
 		GridPane gridPane = new GridPane();		
 		Scene checkersBoard = new Scene(gridPane,600,600);	
 		gridPane.setAlignment(Pos.TOP_CENTER);
@@ -116,6 +116,7 @@ public class GraphicsDriver extends Application {
 				}
 
 				slots[i][j].setOnAction((event) -> { 
+					
 					System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
 				
 					
@@ -131,4 +132,24 @@ public class GraphicsDriver extends Application {
 		
 		return checkersBoard;
 	}
+
+	public void updateBoard() {
+		for(int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				switch (board.getState(i, j)) {
+				case PLAY:
+					slots[i][j].setDisable(true);
+					slots[i][j].setStyle("-fx-base: #ffffff;");
+				case P1:
+					slots[i][j].setGraphic(new ImageView(p1));
+				case P2:
+					slots[i][j].setGraphic(new ImageView(p2));
+				default:
+					slots[i][j].setMouseTransparent(true);
+					slots[i][j].setStyle("-fx-base: #000000;");
+				}
+			}
+		}
+	}
+
 }

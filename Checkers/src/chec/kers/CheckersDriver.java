@@ -8,8 +8,10 @@ public class CheckersDriver {
 		board.display();
 		board.initialize();
 		board.display();
-		ArrayList<Integer> moves = board.checkMoves(2, 3);
-		board.displayMoves(moves);
+		board.movePiece(CellState.P1, 5, 0, 4, 1);
+		board.display();
+		board.movePiece(CellState.P2, 2, 3, 3, 2);
+		board.display();
 	}
 
 }
