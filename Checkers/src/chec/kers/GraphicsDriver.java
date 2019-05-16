@@ -24,12 +24,13 @@ import javafx.stage.Stage;
 public class GraphicsDriver extends Application {
 	private static final double BUTTON_WIDTH = 60;
 	private static final double BUTTON_HEIGHT = 60;
-	private NewButton[][] slots = new NewButton[8][8];
-	private static Board board = new Board();
+	public NewButton[][] slots = new NewButton[8][8];
+	public static Board board = new Board();
 	final Image p1 = new Image(getClass().getResourceAsStream("redpiece30px.png"));
 	final Image p2 = new Image(getClass().getResourceAsStream("bluepiece35px.png"));
 	Stage window;
 	int turn = 1;
+
 
 
 	public static void main(String[] args) {
@@ -40,6 +41,7 @@ public class GraphicsDriver extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		final double WIDTH = 1600;
 		final double HEIGHT = 900;
+		board.initialize();
 		window = primaryStage;
 		window.setTitle("Welcome to Checkers");
 		
@@ -101,7 +103,6 @@ public class GraphicsDriver extends Application {
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				board.initialize();
 				slots[i][j] = new NewButton(i,j);
 				slots[i][j].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 				if (board.getState(i, j) == CellState.PLAY) {
@@ -126,7 +127,7 @@ public class GraphicsDriver extends Application {
 			}
 		}
 		
-		//game();
+		game();
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -143,16 +144,22 @@ public class GraphicsDriver extends Application {
 				if(turn%2 != 0) {
 					if(board.getState(i, j) == CellState.P2) {
 						slots[i][j].setDisable(true);
-						slots[i][j].setOnAction((event) -> { 
-							ArrayList<Integer> moves = board.checkMoves(((NewButton) event.getSource()).getRow(), ((NewButton) event.getSource()).getCol());
-							if(moves.get(0).equals(null)) {
-								
-							}else if()){
-								board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
-							}
-							
-						});
+						
 					}
+					slots[i][j].setOnAction((event) -> { 
+						ArrayList<Integer> moves = board.checkMoves(((NewButton) event.getSource()).getRow(), ((NewButton) event.getSource()).getCol());
+						if(moves.get(0).equals(null)) {
+							
+						}else if(moves.get(2).equals(null)){
+							board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
+						}else {
+							board.setState(moves.get(3), moves.get(2), CellState.HIGHLIGHTED);
+							board.setState(moves.get(1), moves.get(0), CellState.HIGHLIGHTED);
+						}
+						
+						updateBoard(board, slots);
+						
+					});
 				}else {
 					if(board.getState(i, j) == CellState.P1) {
 							slots[i][j].setDisable(true);
@@ -164,7 +171,7 @@ public class GraphicsDriver extends Application {
 		turn++;
 	}
 	
-	public void updateBoard() {
+	public void updateBoard(Board board, NewButton[][] slots) {
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
 				switch (board.getState(i, j)) {
@@ -175,6 +182,9 @@ public class GraphicsDriver extends Application {
 					slots[i][j].setGraphic(new ImageView(p1));
 				case P2:
 					slots[i][j].setGraphic(new ImageView(p2));
+				case HIGHLIGHTED:
+					slots[i][j].setStyle("-fx-base: #ffff00;");
+					slots[i][j].setDisable(false);
 				default:
 					slots[i][j].setMouseTransparent(true);
 					slots[i][j].setStyle("-fx-base: #000000;");

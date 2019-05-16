@@ -30,7 +30,7 @@ public class Board {
 				  
 			  }else if(i<3) {
 				  if(board[i][j].getState() == PLAY) {
-					  board[i][j].setState(CellState.P2);
+					  board[i][j].setState(CellState.HIGHLIGHTED.P2);
 				  }
 			  }else {
 				  if(board[i][j].getState() == PLAY) {
