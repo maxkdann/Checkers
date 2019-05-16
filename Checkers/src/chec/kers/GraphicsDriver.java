@@ -1,5 +1,6 @@
 package chec.kers;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.*;
@@ -23,11 +24,13 @@ import javafx.stage.Stage;
 public class GraphicsDriver extends Application {
 	private static final double BUTTON_WIDTH = 60;
 	private static final double BUTTON_HEIGHT = 60;
-	private static NewButton[][] slots = new NewButton[8][8];
+	private NewButton[][] slots = new NewButton[8][8];
 	private static Board board = new Board();
 	final Image p1 = new Image(getClass().getResourceAsStream("redpiece30px.png"));
 	final Image p2 = new Image(getClass().getResourceAsStream("bluepiece35px.png"));
 	Stage window;
+	int turn = 1;
+
 
 	public static void main(String[] args) {
 		launch(args);
@@ -92,7 +95,6 @@ public class GraphicsDriver extends Application {
 	}
 	
 	public Scene initBoard() {
-		int turn = 1;
 		GridPane gridPane = new GridPane();		
 		Scene checkersBoard = new Scene(gridPane,600,600);	
 		gridPane.setAlignment(Pos.TOP_CENTER);
@@ -124,6 +126,8 @@ public class GraphicsDriver extends Application {
 			}
 		}
 		
+		game();
+		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				gridPane.add(slots[i][j], j,i+1);
@@ -132,7 +136,32 @@ public class GraphicsDriver extends Application {
 		
 		return checkersBoard;
 	}
-
+	
+	public void game() {
+		for(int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				if(turn%2 != 0) {
+					if(board.getState(i, j) == CellState.P2) {
+						slots[i][j].setDisable(true);
+						slots[i][j].setOnAction((event) -> { 
+							ArrayList<Integer> moves = board.checkMoves(((NewButton) event.getSource()).getRow(), ((NewButton) event.getSource()).getCol());
+							if(moves.get(0).equals(null)) {
+								
+							}
+							
+						});
+					}
+				}else {
+					if(board.getState(i, j) == CellState.P1) {
+							slots[i][j].setDisable(true);
+					}
+				}
+			}
+		}
+		
+		turn++;
+	}
+	
 	public void updateBoard() {
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
