@@ -101,32 +101,14 @@ public class GraphicsDriver extends Application {
 		Scene checkersBoard = new Scene(gridPane,900,900);	
 		gridPane.setAlignment(Pos.CENTER);
 		
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				slots[i][j] = new NewButton(i,j);
-				slots[i][j].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-				if (board.getState(i, j) == CellState.PLAY) {
-					slots[i][j].setDisable(true);
-					slots[i][j].setStyle("-fx-base: #ffffff;");
-				}else if(board.getState(i, j) == CellState.P2) {
-					slots[i][j].setGraphic(new ImageView(p2));
-				}else if(board.getState(i, j) == CellState.P1){
-					slots[i][j].setGraphic(new ImageView(p1));
-				}else {
-					slots[i][j].setMouseTransparent(true);
-					slots[i][j].setStyle("-fx-base: #000000;");
+		updateBoard(board, slots);
 
-				}
-
-				slots[i][j].setOnAction((event) -> { 
+				//slots[i][j].setOnAction((event) -> { 
 					
-					System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
+					//System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
 				
 					
-				});
-			}
-		}
-		
+				//});	
 		game();
 		
 		for (int i = 0; i < 8; i++) {
@@ -148,16 +130,17 @@ public class GraphicsDriver extends Application {
 					}
 					slots[i][j].setOnAction((event) -> { 
 						ArrayList<Integer> moves = board.checkMoves(((NewButton) event.getSource()).getRow(), ((NewButton) event.getSource()).getCol());
-						if(moves.get(0).equals(null)) {
+						if(moves.size() == 0) {
 							
-						}else if(moves.get(2).equals(null)){
+						}else if(moves.size() == 2){
 							board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
 						}else {
-							board.setState(moves.get(3), moves.get(2), CellState.HIGHLIGHTED);
+							board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
 							board.setState(moves.get(1), moves.get(0), CellState.HIGHLIGHTED);
+							board.toString();
+
 						}
 						
-						updateBoard(board, slots);
 						
 					});
 				}else {
@@ -168,29 +151,30 @@ public class GraphicsDriver extends Application {
 			}
 		}
 		
-		turn++;
+		//turn++;
 	}
 	
 	public void updateBoard(Board board, NewButton[][] slots) {
-		for(int i = 0; i<8; i++) {
-			for(int j = 0; j<8; j++) {
-				switch (board.getState(i, j)) {
-				case PLAY:
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				slots[i][j] = new NewButton(i,j);
+				slots[i][j].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+				if (board.getState(i, j) == CellState.PLAY) {
 					slots[i][j].setDisable(true);
 					slots[i][j].setStyle("-fx-base: #ffffff;");
-				case P1:
-					slots[i][j].setGraphic(new ImageView(p1));
-				case P2:
+				}else if(board.getState(i, j) == CellState.P2) {
 					slots[i][j].setGraphic(new ImageView(p2));
-				case HIGHLIGHTED:
-					slots[i][j].setStyle("-fx-base: #ffff00;");
-					slots[i][j].setDisable(false);
-				default:
+				}else if(board.getState(i, j) == CellState.P1){
+					slots[i][j].setGraphic(new ImageView(p1));
+				}else if(board.getState(i, j) == CellState.HIGHLIGHTED){
+					slots[i][j].setStyle("-fx-base: #000000;");
+				}else {
 					slots[i][j].setMouseTransparent(true);
 					slots[i][j].setStyle("-fx-base: #000000;");
+
 				}
+	
 			}
 		}
 	}
-
 }
