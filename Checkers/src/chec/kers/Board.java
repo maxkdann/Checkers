@@ -41,6 +41,31 @@ public class Board {
 	  }
 	}
 	
+	public void movePiece(CellState player, int x, int y, int w, int z) {
+		board[x][y].setState(PLAY);
+		if(w == x-2 && z == y-2) {
+			board[w][z].setState(player);
+			board[x-1][y-1].setState(PLAY);
+		}
+		
+		if(w == x-2 && z == y+2) {
+			board[w][z].setState(player);
+			board[x-1][y+1].setState(PLAY);
+		}
+		
+		if(w == x+2 && z == y+2) {
+			board[w][z].setState(player);
+			board[x+1][y+1].setState(PLAY);
+		}
+		
+		if(w == x+2 && z == y-2) {
+			board[w][z].setState(player);
+			board[x+1][y-1].setState(PLAY);
+		}
+		
+		board[w][z].setState(player);
+	}
+	
 	public ArrayList<Integer> checkMoves(int x, int y) {
 		ArrayList<Integer> moves = new ArrayList<>();
 		
