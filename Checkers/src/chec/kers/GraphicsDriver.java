@@ -38,8 +38,8 @@ public class GraphicsDriver extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		final double WIDTH = 550;
-		final double HEIGHT = 550;
+		final double WIDTH = 1600;
+		final double HEIGHT = 900;
 		window = primaryStage;
 		window.setTitle("Welcome to Checkers");
 		
@@ -96,8 +96,8 @@ public class GraphicsDriver extends Application {
 	
 	public Scene initBoard() {
 		GridPane gridPane = new GridPane();		
-		Scene checkersBoard = new Scene(gridPane,600,600);	
-		gridPane.setAlignment(Pos.TOP_CENTER);
+		Scene checkersBoard = new Scene(gridPane,900,900);	
+		gridPane.setAlignment(Pos.CENTER);
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -126,7 +126,7 @@ public class GraphicsDriver extends Application {
 			}
 		}
 		
-		game();
+		//game();
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -147,6 +147,8 @@ public class GraphicsDriver extends Application {
 							ArrayList<Integer> moves = board.checkMoves(((NewButton) event.getSource()).getRow(), ((NewButton) event.getSource()).getCol());
 							if(moves.get(0).equals(null)) {
 								
+							}else if()){
+								board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
 							}
 							
 						});
