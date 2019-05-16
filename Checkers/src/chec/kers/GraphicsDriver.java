@@ -103,12 +103,14 @@ public class GraphicsDriver extends Application {
 				slots[i][j] = new NewButton(i,j);
 				slots[i][j].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 				if (board.getState(i, j) == CellState.PLAY) {
-				slots[i][j].setStyle("-fx-base: #ffffff;");
+					slots[i][j].setDisable(true);
+					slots[i][j].setStyle("-fx-base: #ffffff;");
 				}else if(board.getState(i, j) == CellState.P2) {
 					slots[i][j].setGraphic(new ImageView(p2));
 				}else if(board.getState(i, j) == CellState.P1){
 					slots[i][j].setGraphic(new ImageView(p1));
 				}else {
+					slots[i][j].setMouseTransparent(true);
 					slots[i][j].setStyle("-fx-base: #000000;");
 
 				}
