@@ -74,19 +74,97 @@ public class Board {
 					}
 				}
 			}else {
-				if(board[x-1][y+1].getState() != PLAY && board[x-1][y+1].getState() != PLAY) {
-					if(board[x-2][y+2].getState() == PLAY) {
-						
+				if(board[x-1][y+1].getState() != PLAY) {
+					if(board[x-2][y+2].getState() == PLAY && x>1 && y<6) {
+						moves.add(x-2);
+						moves.add(y+2);
 					}
 				}
+				
+				if(board[x-1][y-1].getState() != PLAY) {
+					if(board[x-2][y-2].getState() == PLAY && x>1 && y>1) {
+						moves.add(x-2);
+						moves.add(y-2);
+					}
+				}
+				
+				if(board[x-1][y+1].getState() == PLAY) {
+					moves.add(x-1);
+					moves.add(y+1);
+				}
+				
+				if(board[x-1][y-1].getState() == PLAY) {
+					moves.add(x-1);
+					moves.add(y-1);
+				}
+				
+				return moves;
 			}
 			
 			
 		}else if(board[x][y].getState() == CellState.P2) {
-			
+			if(y==0) {
+				if(board[x+1][y-1].getState() == PLAY) {
+					moves.add(x+1);
+					moves.add(y-1);
+					return moves;
+				}else {
+					if(board[x+2][y-2].getState() == PLAY && x<6 && y>1) {
+						moves.add(x+2);
+						moves.add(y-2);
+						return moves;
+					}else {
+						return moves;
+					}
+				}
+			}else if(y==7) {
+				if(board[x+1][y+1].getState() == PLAY) {
+					moves.add(x+1);
+					moves.add(y+1);
+					return moves;
+				}else {
+					if(board[x+2][y+2].getState() == PLAY && x<6 && y<6) {
+						moves.add(x+2);
+						moves.add(y+2);
+						return moves;
+					}else {
+						return moves;
+					}
+				}
+			}else {
+				if(board[x+1][y-1].getState() != PLAY) {
+					if(board[x+2][y-2].getState() == PLAY && x<6 && y>1) {
+						moves.add(x+2);
+						moves.add(y-2);
+					}
+				}
+				
+				if(board[x+1][y+1].getState() != PLAY) {
+					if(board[x+2][y+2].getState() == PLAY && x<6 && y<6) {
+						moves.add(x+2);
+						moves.add(y+2);
+					}
+				}
+				
+				if(board[x+1][y-1].getState() == PLAY) {
+					moves.add(x+1);
+					moves.add(y-1);
+				}
+				
+				if(board[x+1][y+1].getState() == PLAY) {
+					moves.add(x+1);
+					moves.add(y+1);
+				}
+				
+				return moves;
+			}
 		}else {
 			return moves;
 		}
+	}
+	
+	public CellState getState(int x, int y) {
+		return board[x][y].getState();
 	}
 	
 	public void display() {
@@ -98,5 +176,13 @@ public class Board {
 			System.out.println();
 		}
 	}
+	
+	public void displayMoves(ArrayList<Integer> moves) {
+		for(int i = 0; i < moves.size(); i++) {
+			System.out.print(moves.get(i));
+			System.out.print(", ");
+		}
+	}
 
 }
+

@@ -21,7 +21,11 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class GraphicsDriver extends Application {
-
+	private static final double BUTTON_WIDTH = 60;
+	private static final double BUTTON_HEIGHT = 60;
+	private static NewButton[][] slots = new NewButton[8][8];
+	private static Board board = new Board();
+	
 	Stage window;
 
 	public static void main(String[] args) {
@@ -46,7 +50,7 @@ public class GraphicsDriver extends Application {
 	 * @param height of the stage
 	 * @return the scene
 	 */
-	public static Scene welcome(Stage window, double width, double height) {		
+	public Scene welcome(Stage window, double width, double height) {		
 		final Image titleScreen = new Image("asset.jpg"); // title screen image
 		final ImageView flashScreen_node = new ImageView();
 		flashScreen_node.setImage(titleScreen); // set the image of the title screen
@@ -70,6 +74,8 @@ public class GraphicsDriver extends Application {
 			if (result) {
 				// 2 players
 				System.out.println("2 players");
+				window.setScene(initBoard());
+				window.show();
 			}
 		});
 		HBox buttons = new HBox();
@@ -82,5 +88,45 @@ public class GraphicsDriver extends Application {
 		root.getChildren().addAll(flashScreen_node, layout);
 		Scene scene = new Scene(root, width, height, Color.BLACK);
 		return scene;
+	}
+	
+	public Scene initBoard() {
+		final Image p1 = new Image(getClass().getResourceAsStream("redpiece30px.png"));
+		final Image p2 = new Image(getClass().getResourceAsStream("bluepiece35px.png"));
+		GridPane gridPane = new GridPane();		
+		Scene checkersBoard = new Scene(gridPane,600,600);	
+		gridPane.setAlignment(Pos.TOP_CENTER);
+		
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				board.initialize();
+				slots[i][j] = new NewButton(i,j);
+				slots[i][j].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+				if (board.getState(i, j) == CellState.PLAY) {
+				slots[i][j].setStyle("-fx-base: #ffffff;");
+				}else if(board.getState(i, j) == CellState.P2) {
+					slots[i][j].setGraphic(new ImageView(p2));
+				}else if(board.getState(i, j) == CellState.P1){
+					slots[i][j].setGraphic(new ImageView(p1));
+				}else {
+					slots[i][j].setStyle("-fx-base: #000000;");
+
+				}
+
+				slots[i][j].setOnAction((event) -> { 
+					System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
+				
+					
+				});
+			}
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				gridPane.add(slots[i][j], j,i+1);
+			}
+		}
+		
+		return checkersBoard;
 	}
 }
