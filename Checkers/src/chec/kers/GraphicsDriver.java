@@ -34,6 +34,7 @@ public class GraphicsDriver extends Application {
 
 
 	public static void main(String[] args) {
+		board.initialize();
 		launch(args);
 	}
 
@@ -41,7 +42,6 @@ public class GraphicsDriver extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		final double WIDTH = 1600;
 		final double HEIGHT = 900;
-		board.initialize();
 		window = primaryStage;
 		window.setTitle("Welcome to Checkers");
 		
@@ -101,16 +101,16 @@ public class GraphicsDriver extends Application {
 		Scene checkersBoard = new Scene(gridPane,900,900);	
 		gridPane.setAlignment(Pos.CENTER);
 		
-		updateBoard(board, slots);
+		//updateBoard(board, slots);
 
 				//slots[i][j].setOnAction((event) -> { 
 					
-					//System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
+				//	System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
 				
 					
 				//});	
-		game();
-		
+		game(window);
+		//window.show();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				gridPane.add(slots[i][j], j,i+1);
@@ -120,7 +120,9 @@ public class GraphicsDriver extends Application {
 		return checkersBoard;
 	}
 	
-	public void game() {
+	public void game(Stage window) {
+		updateBoard(board);
+		
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
 				if(turn%2 != 0) {
@@ -129,49 +131,63 @@ public class GraphicsDriver extends Application {
 						
 					}
 					slots[i][j].setOnAction((event) -> { 
+						System.out.println( ((NewButton) event.getSource()).getRow() + ", " + ((NewButton) event.getSource()).getCol() ); 
 						ArrayList<Integer> moves = board.checkMoves(((NewButton) event.getSource()).getRow(), ((NewButton) event.getSource()).getCol());
 						if(moves.size() == 0) {
-							
+							board.display();
 						}else if(moves.size() == 2){
+							board.display();
 							board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
 						}else {
+							//board.display();
+							
 							board.setState(moves.get(0), moves.get(1), CellState.HIGHLIGHTED);
-							board.setState(moves.get(1), moves.get(0), CellState.HIGHLIGHTED);
-							board.toString();
+							board.setState(moves.get(2), moves.get(3), CellState.HIGHLIGHTED);
+							//updateBoard(board, slots);
+							//window.show();
+							System.out.println("hi");
 
 						}
-						
-						
-					});
+						System.out.println("hi");
+						board.display();
+						updateBoard(board);
+						//window.show();
+						});
 				}else {
 					if(board.getState(i, j) == CellState.P1) {
 							slots[i][j].setDisable(true);
 					}
 				}
 			}
+			
 		}
+		//return scene;
 		
-		//turn++;
+		
 	}
 	
-	public void updateBoard(Board board, NewButton[][] slots) {
+	public void updateBoard(Board board) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				slots[i][j] = new NewButton(i,j);
 				slots[i][j].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 				if (board.getState(i, j) == CellState.PLAY) {
-					slots[i][j].setDisable(true);
+					//slots[i][j].setMouseTransparent(true);
 					slots[i][j].setStyle("-fx-base: #ffffff;");
+					slots[i][j].setStyle("-fx-color: ffffff");
 				}else if(board.getState(i, j) == CellState.P2) {
 					slots[i][j].setGraphic(new ImageView(p2));
 				}else if(board.getState(i, j) == CellState.P1){
 					slots[i][j].setGraphic(new ImageView(p1));
 				}else if(board.getState(i, j) == CellState.HIGHLIGHTED){
-					slots[i][j].setStyle("-fx-base: #000000;");
+					slots[i][j].setStyle("-fx-color: ffff00");
+					slots[i][j].setStyle("-fx-base: #ffff00;");
+					System.out.println(slots[i][j].getStylesheets());
+					System.out.println("yo");
 				}else {
-					slots[i][j].setMouseTransparent(true);
+					//slots[i][j].setMouseTransparent(true);
+					slots[i][j].setStyle("-fx-color: 000000");
 					slots[i][j].setStyle("-fx-base: #000000;");
-
 				}
 	
 			}

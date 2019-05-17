@@ -29,6 +29,8 @@ public class Cell {
 			return "-";
 		case P2:
 			return "*";
+		case HIGHLIGHTED:
+			return "_";
 		default:
 			return "-";
 		}
