@@ -64,10 +64,7 @@ public class GraphicsDriver extends Application {
 		Label label = new Label("Please choose one of the following: ");
 		HBox hbox = new HBox();
 		Button button2 = new Button("Start");
-		Button roundButton = new Button();
-		
-			roundButton.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 3px; " + "-fx-min-height: 3px; "
-					+ "-fx-max-width: 3px; " + "-fx-max-height: 3px;"+"fx-color: ff0000");
+
 		
 		button2.setOnAction(e -> {
 			boolean result = ConfirmBox.display("Verify", "Are you sure you're ready to start?");
@@ -79,10 +76,10 @@ public class GraphicsDriver extends Application {
 			}
 		});
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(button2, roundButton);
+		buttons.getChildren().addAll(button2);
 		buttons.setAlignment(Pos.CENTER);
 		VBox layout = new VBox();
-		layout.getChildren().addAll(label,buttons, roundButton);
+		layout.getChildren().addAll(label,buttons);
 		layout.setAlignment(Pos.CENTER);
 		StackPane root = new StackPane();
 		root.getChildren().addAll(flashScreen_node, layout);
