@@ -64,16 +64,6 @@ public class GraphicsDriver extends Application {
 		Label label = new Label("Please choose one of the following: ");
 		HBox hbox = new HBox();
 		Button button2 = new Button("Start");
-		 Button roundButton = new Button();
-
-	        roundButton.setStyle(
-	                "-fx-background-radius: 5em; " +
-	                "-fx-min-width: 30px; " +
-	                "-fx-min-height: 30px; " +
-	                "-fx-max-width: 30px; " +
-	                "-fx-max-height: 30px;" +
-	                "-fx-color: FF0000"
-	        );
 
 		button2.setOnAction(e -> {
 			boolean result = ConfirmBox.display("Verify", "Are you sure you're ready to start?");
@@ -85,7 +75,7 @@ public class GraphicsDriver extends Application {
 			}
 		});
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(button2, roundButton);
+		buttons.getChildren().addAll(button2);
 		buttons.setAlignment(Pos.CENTER);
 		VBox layout = new VBox();
 		layout.getChildren().addAll(label,buttons);

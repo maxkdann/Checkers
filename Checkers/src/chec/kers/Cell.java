@@ -11,14 +11,26 @@ public class Cell {
 		
 	}
 	
+	/**
+	 * sets the state of the cell
+	 * @param cs
+	 */
 	public void setState (CellState cs){
 		state = cs;
 	}
 	
+	/**
+	 * returns the state of the cell selected
+	 * @return state
+	 */
 	public CellState getState() {
+		
 		return state;
 	}
 	
+	/**
+	 * tostring method for debugging
+	 */
 	public String toString() {
 		switch (state) {
 		case NOPLAY:

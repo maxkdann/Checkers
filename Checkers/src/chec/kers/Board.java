@@ -23,6 +23,9 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * set up original board
+	 */
 	public void initialize() {
 	  for(int i = 0; i < 8; i++) {
 		  for(int j = 0; j<8; j++) {
@@ -41,6 +44,14 @@ public class Board {
 	  }
 	}
 	
+	/**
+	 * move the pieces
+	 * @param player
+	 * @param x possible move location based on arraylist of moves
+	 * @param y possible move location based on arraylist of moves
+	 * @param w possible move location based on arraylist of moves
+	 * @param z possible move location based on arraylist of moves
+	 */
 	public void movePiece(CellState player, int x, int y, int w, int z) {
 		board[x][y].setState(PLAY);
 		if(w == x-2 && z == y-2) {
@@ -66,6 +77,12 @@ public class Board {
 		board[w][z].setState(player);
 	}
 	
+	/**
+	 * returns a list of possible move locations for a selected piece
+	 * @param x location of piece
+	 * @param y location of piece
+	 * @return possible moves of selected piece
+	 */
 	public ArrayList<Integer> checkMoves(int x, int y) {
 		ArrayList<Integer> moves = new ArrayList<>();
 		if(board[x][y].getState() == CellState.P1) {
@@ -187,14 +204,29 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * get the state of the tile at a specific location on the board
+	 * @param x coordinate of the tile
+	 * @param y coordinate of the tile
+	 * @return state of the tile
+	 */
 	public CellState getState(int x, int y) {
 		return board[x][y].getState();
 	}
 	
+	/**
+	 * set the state of the tile to the desired given state
+	 * @param x coordinate of the tile
+	 * @param y coordinate of the tile
+	 * @param state 
+	 */
 	public void setState(int x, int y, CellState state) {
 		board[x][y].setState(state);
 	}
 	
+	/**
+	 * displays a text board for debugging
+	 */
 	public void display() {
 		System.out.println("BOARD");
 		for (int i = 0; i < 8; i++) {
@@ -205,6 +237,10 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * displays the possible moves of the piece selected
+	 * @param moves
+	 */
 	public void displayMoves(ArrayList<Integer> moves) {
 		for(int i = 0; i < moves.size(); i++) {
 			System.out.print(moves.get(i));

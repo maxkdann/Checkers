@@ -12,6 +12,12 @@ public class ConfirmBox {
 
 	static boolean answer;
 	
+	/**
+	 * confirm box GUI
+	 * @param title of the window
+	 * @param message displayed to the user
+	 * @return boolean answer on whether the user is ready or not
+	 */
 	public static boolean display(String title, String message) {
 		Stage window = new Stage();
 		
