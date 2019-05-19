@@ -40,7 +40,7 @@ public class GraphicsDriver extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		final double WIDTH = 1600;
+		final double WIDTH = 900;
 		final double HEIGHT = 900;
 		window = primaryStage;
 		window.setTitle("Welcome to Checkers");
@@ -64,7 +64,11 @@ public class GraphicsDriver extends Application {
 		Label label = new Label("Please choose one of the following: ");
 		HBox hbox = new HBox();
 		Button button2 = new Button("Start");
-
+		Button roundButton = new Button();
+		
+			roundButton.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 3px; " + "-fx-min-height: 3px; "
+					+ "-fx-max-width: 3px; " + "-fx-max-height: 3px;"+"fx-color: ff0000");
+		
 		button2.setOnAction(e -> {
 			boolean result = ConfirmBox.display("Verify", "Are you sure you're ready to start?");
 			if (result) {
@@ -75,10 +79,10 @@ public class GraphicsDriver extends Application {
 			}
 		});
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(button2);
+		buttons.getChildren().addAll(button2, roundButton);
 		buttons.setAlignment(Pos.CENTER);
 		VBox layout = new VBox();
-		layout.getChildren().addAll(label,buttons);
+		layout.getChildren().addAll(label,buttons, roundButton);
 		layout.setAlignment(Pos.CENTER);
 		StackPane root = new StackPane();
 		root.getChildren().addAll(flashScreen_node, layout);
