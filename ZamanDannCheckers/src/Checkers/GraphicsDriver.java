@@ -1,10 +1,19 @@
 package Checkers;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -22,6 +31,7 @@ public class GraphicsDriver extends Application {
 	//create groups to stores tiles as well as pieces
 	private Group tileGroup = new Group();
 	private Group pieceGroup = new Group();
+	private static int turn;
 
 	/**
 	 * Creates pieces on the board
@@ -74,9 +84,16 @@ public class GraphicsDriver extends Application {
 	private MoveResult tryMove(Piece piece, int newX, int newY) {
 		//doesn't allow pieces to move off the board
 		//doesn't move pieces if they aren't selected
-		if (board[newX][newY].hasPiece() || (newX + newY) % 2 == 0) {
+		System.out.println(newX);
+		System.out.println(newY);
+		try{
+			if (board[newX][newY].hasPiece() || (newX + newY) % 2 == 0) {
+				return new MoveResult(MoveType.NONE);
+			}
+		}catch(Exception e) {
 			return new MoveResult(MoveType.NONE);
 		}
+		
 		//store piece location before move
 		int x0 = toBoard(piece.getOldX());
 		int y0 = toBoard(piece.getOldY());
@@ -110,7 +127,7 @@ public class GraphicsDriver extends Application {
 	 * Graphics driver
 	 */
 	public void start(Stage primaryStage) throws Exception {
-		Scene scene = new Scene(createContent());
+		Scene scene = welcome(primaryStage, 640,640);
 		primaryStage.setTitle("Welcome to Checkers");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -165,6 +182,44 @@ public class GraphicsDriver extends Application {
 		});
 
 		return piece;
+	}
+	
+	/**
+	 * Welcome menu scene, gets user's choice
+	 * @param window (stage)
+	 * @param width of the stage
+	 * @param height of the stage
+	 * @return the scene
+	 */
+	public Scene welcome(Stage window, double width, double height) {		
+		final Image titleScreen = new Image("asset.jpg"); // title screen image
+		final ImageView flashScreen_node = new ImageView();
+		flashScreen_node.setImage(titleScreen); // set the image of the title screen
+		window.getIcons().add(titleScreen); // stage icon
+		Label label = new Label("Please choose one of the following: ");
+		HBox hbox = new HBox();
+		Button button2 = new Button("Start");
+
+		
+		button2.setOnAction(e -> {
+			boolean result = ConfirmBox.display("Verify", "Are you sure you're ready to start?");
+			if (result) {
+				Scene scene = new Scene(createContent());
+				window.setTitle("Welcome to Checkers");
+				window.setScene(scene);
+				window.show();
+			}
+		});
+		HBox buttons = new HBox();
+		buttons.getChildren().addAll(button2);
+		buttons.setAlignment(Pos.CENTER);
+		VBox layout = new VBox();
+		layout.getChildren().addAll(label,buttons);
+		layout.setAlignment(Pos.CENTER);
+		StackPane root = new StackPane();
+		root.getChildren().addAll(flashScreen_node, layout);
+		Scene scene = new Scene(root, width, height, Color.BLACK);
+		return scene;
 	}
 
 	public static void main(String[] args) {
