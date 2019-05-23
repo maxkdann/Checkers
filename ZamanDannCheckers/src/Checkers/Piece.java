@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
 public class Piece extends StackPane {
+	public static Turn turn = new Turn();
 
 	private PieceType type;
 	// create variables to store the location of the mouse when it clicks a piece
@@ -49,7 +50,7 @@ public class Piece extends StackPane {
 	 * @param x    location on board
 	 * @param y    location on board
 	 */
-	public Piece(PieceType type, int x, int y, int turn) {
+	public Piece(PieceType type, int x, int y) {
 		this.type = type;
 		// put all pieces on seperate tiles
 		move(x, y);
@@ -71,13 +72,13 @@ public class Piece extends StackPane {
 		});
 		// make the piece draggable
 		setOnMouseDragged(e -> {
-				
-			if(turn%2!=0 && type == PieceType.RED) {
+			
+			if(turn.getTurn()%2!=0 && type == PieceType.RED) {
 				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
-			}else if(turn%2==0 && type == PieceType.BLUE) {
+			}else if(turn.getTurn()%2==0 && type == PieceType.BLUE) {
 				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
 			}
-				
+			
 
 		});
 
