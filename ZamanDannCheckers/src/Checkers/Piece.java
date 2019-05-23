@@ -49,7 +49,7 @@ public class Piece extends StackPane {
 	 * @param x    location on board
 	 * @param y    location on board
 	 */
-	public Piece(PieceType type, int x, int y) {
+	public Piece(PieceType type, int x, int y, int turn) {
 		this.type = type;
 		// put all pieces on seperate tiles
 		move(x, y);
@@ -63,7 +63,7 @@ public class Piece extends StackPane {
 		ellipse.setTranslateX((TILE_SIZE - TILE_SIZE * 0.25 * 2) / 2);
 		ellipse.setTranslateY((TILE_SIZE - TILE_SIZE * 0.25 * 2) / 2);
 
-		getChildren().addAll(ellipse);
+		getChildren().addAll(ellipse);	
 		// event handler for when a piece is clicked on
 		setOnMousePressed(e -> {
 			mouseX = e.getSceneX();
@@ -71,7 +71,14 @@ public class Piece extends StackPane {
 		});
 		// make the piece draggable
 		setOnMouseDragged(e -> {
-			relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+				
+			if(turn%2!=0 && type == PieceType.RED) {
+				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+			}else if(turn%2==0 && type == PieceType.BLUE) {
+				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+			}
+				
+
 		});
 
 	}

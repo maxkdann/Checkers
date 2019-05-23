@@ -31,7 +31,7 @@ public class GraphicsDriver extends Application {
 	//create groups to stores tiles as well as pieces
 	private Group tileGroup = new Group();
 	private Group pieceGroup = new Group();
-	private static int turn;
+	public static Turn turn = new Turn();
 
 	/**
 	 * Creates pieces on the board
@@ -71,6 +71,7 @@ public class GraphicsDriver extends Application {
 			}
 		}
 		
+		System.out.println(turn);
 		return root;
 	}
 
@@ -84,8 +85,7 @@ public class GraphicsDriver extends Application {
 	private MoveResult tryMove(Piece piece, int newX, int newY) {
 		//doesn't allow pieces to move off the board
 		//doesn't move pieces if they aren't selected
-		System.out.println(newX);
-		System.out.println(newY);
+
 		try{
 			if (board[newX][newY].hasPiece() || (newX + newY) % 2 == 0) {
 				return new MoveResult(MoveType.NONE);
@@ -99,6 +99,8 @@ public class GraphicsDriver extends Application {
 		int y0 = toBoard(piece.getOldY());
 		//normal move
 		if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
+			turn.setTurn();
+			System.out.println(turn.getTurn());
 			return new MoveResult(MoveType.NORMAL);
 		} else if (Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir * 2) {
 
@@ -106,6 +108,8 @@ public class GraphicsDriver extends Application {
 			int y1 = y0 + (newY - y0) / 2;
 			//jump move
 			if (board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType()) {
+				turn.setTurn();
+				System.out.println(turn.getTurn());
 				return new MoveResult(MoveType.KILL, board[x1][y1].getPiece());
 			}
 		}
@@ -129,6 +133,7 @@ public class GraphicsDriver extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Scene scene = welcome(primaryStage, 640,640);
 		primaryStage.setTitle("Welcome to Checkers");
+		System.out.println(turn.getTurn());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -142,7 +147,7 @@ public class GraphicsDriver extends Application {
 	 */
 	private Piece makePiece(PieceType type, int x, int y) {
 		//create a piece object
-		Piece piece = new Piece(type, x, y);
+		Piece piece = new Piece(type, x, y, turn.getTurn());
 		//event handler for when piece is placed
 		piece.setOnMouseReleased(e -> {
 			//get new location of piece
