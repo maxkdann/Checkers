@@ -7,8 +7,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
 public class Piece extends StackPane {
+	//Creates turn counter  object
 	public static Turn turn = new Turn();
-
+	
 	private PieceType type;
 	// create variables to store the location of the mouse when it clicks a piece
 	private double mouseX, mouseY;

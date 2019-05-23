@@ -132,7 +132,6 @@ public class GraphicsDriver extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Scene scene = welcome(primaryStage, 640,640);
 		primaryStage.setTitle("Welcome to Checkers");
-		System.out.println(Piece.turn.getTurn());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
