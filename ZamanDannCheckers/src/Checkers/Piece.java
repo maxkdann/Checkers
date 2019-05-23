@@ -6,6 +6,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
+//commit pls
+
 public class Piece extends StackPane {
 	//Creates turn counter  object
 	public static Turn turn = new Turn();

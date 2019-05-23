@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+//just let me
+
 /**
  * Checkers
  * @author Kiyan Zaman and Max Dann
