@@ -54,7 +54,7 @@ public class Piece extends StackPane {
 	 */
 	public Piece(PieceType type, int x, int y) {
 		this.type = type;
-		// put all pieces on seperate tiles
+		// put all pieces on separate tiles
 		move(x, y);
 		// create a circle and fill it either red or white
 		Ellipse ellipse = new Ellipse(TILE_SIZE * 0.25, TILE_SIZE * 0.25);
@@ -72,7 +72,7 @@ public class Piece extends StackPane {
 			mouseX = e.getSceneX();
 			mouseY = e.getSceneY();
 		});
-		// make the piece draggable
+		//action event to move piece as well as logic for turns 
 		setOnMouseDragged(e -> {
 			
 			if(turn.getTurn()%2!=0 && type == PieceType.RED) {
