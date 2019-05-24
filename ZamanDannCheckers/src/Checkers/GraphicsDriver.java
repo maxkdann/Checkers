@@ -167,8 +167,11 @@ public class GraphicsDriver extends Application {
 		primaryStage.show();
 	}
 
-
-	private boolean checkRedWin() {
+	/**
+	 * Checks for whether blue has won
+	 * @return true or false
+	 */
+	private boolean checkBlueWin() {
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j<8; j++) {
 				if(board[i][j].hasPiece() && board[i][j].getPiece().getType() == PieceType.RED) {
@@ -179,7 +182,11 @@ public class GraphicsDriver extends Application {
 		return true;
 	}
 	
-	private boolean checkBlueWin() {
+	/**
+	 * Checks for whether red has won
+	 * @return true or false
+	 */
+	private boolean checkRedWin() {
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j<8; j++) {
 				if(board[i][j].hasPiece() && board[i][j].getPiece().getType() == PieceType.BLUE) {
