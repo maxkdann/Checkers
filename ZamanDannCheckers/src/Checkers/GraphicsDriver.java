@@ -241,10 +241,14 @@ public class GraphicsDriver extends Application {
 				Piece otherPiece = result.getPiece();
 				board[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 				pieceGroup.getChildren().remove(otherPiece);
-				if(checkRedWin()||checkBlueWin()) {
-					System.out.println("You Win!");
+				//checks if either team has won
+				if(checkRedWin()) {
+					System.out.println("Red Wins!");
 					
+				}else if(checkBlueWin()) {
+					System.out.println("Blue Wins!");
 				}
+				
 				break;
 				
 			}
