@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-//just let me
 
 /**
  * Checkers
@@ -98,10 +97,42 @@ public class GraphicsDriver extends Application {
 		int x0 = toBoard(piece.getOldX());
 		int y0 = toBoard(piece.getOldY());
 		//normal move
+		
 		if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
+			
+			
+			//This if() tree up to line 131 forces your move if you have the option to kill
+			if(newY>y0) {
+				if(newX>x0) {
+					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY+1].noPiece()){
+						return new MoveResult(MoveType.NONE);
+					}
+				}
+				if(newX<x0) {
+					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY+1].noPiece()){
+						return new MoveResult(MoveType.NONE);
+					}
+				}
+			}
+			if(newY<y0) {
+				if(newX>x0) {
+					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY-1].noPiece()){
+						return new MoveResult(MoveType.NONE);
+					}
+				}
+				if(newX<x0) {
+					if(newX<x0) {
+						if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY-1].noPiece()){
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+				}
+			}
+			
+			
 			Piece.turn.setTurn();
 			return new MoveResult(MoveType.NORMAL);
-		} else if (Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir * 2) {
+		}else if (Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir * 2) {
 
 			int x1 = x0 + (newX - x0) / 2;
 			int y1 = y0 + (newY - y0) / 2;
