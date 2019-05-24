@@ -102,31 +102,31 @@ public class GraphicsDriver extends Application {
 			
 			
 			//This if() tree forces your move if you have the option to kill; 1 branch for each direction
-			if(newY>y0) {
-				if(newX>x0) {
+			if(newY>y0 && y0<7) {
+				if(newX>x0 && x0 > 1) {
 					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY+1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
-				if(newX<x0) {
+				if(newX<x0 && x0 < 6) {
 					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY+1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 			}
-			if(newY<y0) {
-				if(newX>x0) {
+			if(newY<y0 && y0 > 0) {
+				if(newX>x0 && x0 > 1) {
 					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY-1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
-				if(newX<x0) {
-					if(newX<x0) {
-						if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY-1].noPiece()){
-							return new MoveResult(MoveType.NONE);
-						}
+				
+				if(newX<x0 && x0 < 6) {
+					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY-1].noPiece()){
+						return new MoveResult(MoveType.NONE);
 					}
 				}
+				
 			}
 			
 			//if all above booleans return false the move is approved
