@@ -37,6 +37,15 @@ public class Tile extends Rectangle {
 	public boolean noPiece() {
 		return piece == null;
 	}
+	
+	/**
+	 * returns true or false depending on if it is occupied by a piece object
+	 * @return piece object
+	 */
+	public boolean noRed() {
+		return piece == null;
+	}
+	
 	/**
 	 * returns the piece object on that specific tile
 	 * @return piece

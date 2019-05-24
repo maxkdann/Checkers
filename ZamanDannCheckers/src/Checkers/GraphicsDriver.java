@@ -71,6 +71,7 @@ public class GraphicsDriver extends Application {
 			}
 		}
 		
+		
 		return root;
 	}
 
@@ -101,28 +102,28 @@ public class GraphicsDriver extends Application {
 		if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
 			
 			
-			//This if() tree forces your move if you have the option to kill; 1 branch for each direction
+			//This if() tree forces your move if you have the option to kill; avoid looking at it if u value your sanity
 			if(newY>y0 && y0<7) {
 				if(newX>x0 && x0 > 1) {
-					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY+1].noPiece()){
+					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-3][newY+1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 				if(newX<x0 && x0 < 6) {
-					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY+1].noPiece()){
+					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+3][newY+1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 			}
 			if(newY<y0 && y0 > 0) {
 				if(newX>x0 && x0 > 1) {
-					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY-1].noPiece()){
+					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-3][newY-1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 				
 				if(newX<x0 && x0 < 6) {
-					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+2][newY-1].noPiece()){
+					if(board[newX+2][newY].hasPiece() && board[newX+2][newY].getPiece().getType()!= piece.getType() && board[newX+3][newY-1].noPiece()){
 						return new MoveResult(MoveType.NONE);
 					}
 				}
@@ -166,13 +167,37 @@ public class GraphicsDriver extends Application {
 		primaryStage.show();
 	}
 
+
+	private boolean checkRedWin() {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j<8; j++) {
+				if(board[i][j].hasPiece() && board[i][j].getPiece().getType() == PieceType.RED) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	private boolean checkBlueWin() {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j<8; j++) {
+				if(board[i][j].hasPiece() && board[i][j].getPiece().getType() == PieceType.BLUE) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	
 	/**
 	 * makes and deletes pieces
 	 * @param type
 	 * @param x location
 	 * @param y location
 	 * @return piece after move
-	 */
+	**/
 	private Piece makePiece(PieceType type, int x, int y) {
 		//create a piece object
 		Piece piece = new Piece(type, x, y);
@@ -209,6 +234,10 @@ public class GraphicsDriver extends Application {
 				Piece otherPiece = result.getPiece();
 				board[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 				pieceGroup.getChildren().remove(otherPiece);
+				if(checkRedWin()||checkBlueWin()) {
+					System.out.println("You Win!");
+					
+				}
 				break;
 				
 			}
