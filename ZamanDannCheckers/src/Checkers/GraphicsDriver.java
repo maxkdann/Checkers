@@ -101,7 +101,7 @@ public class GraphicsDriver extends Application {
 		if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
 			
 			
-			//This if() tree forces your move if you have the option to kill
+			//This if() tree forces your move if you have the option to kill; 1 branch for each direction
 			if(newY>y0) {
 				if(newX>x0) {
 					if(board[newX-2][newY].hasPiece() && board[newX-2][newY].getPiece().getType()!= piece.getType() && board[newX-2][newY+1].noPiece()){
