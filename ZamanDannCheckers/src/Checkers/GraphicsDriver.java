@@ -158,6 +158,24 @@ public class GraphicsDriver extends Application {
 		return new MoveResult(MoveType.NONE);
 	}
 
+	private MoveResult tryMultiJump(Piece piece, int newX, int newY) {
+		if(piece.getType() == PieceType.RED) {
+			if(newX<6 && newY<6) {
+				if(board[newX+1][newY+1].noPiece() && board[newX+2][newY+2].hasPiece() && board[newX+2][newY+2].getPiece().getType()!=piece.getType()) {
+					return new MoveResult(MoveType.KILL, piece);
+				}
+			}
+		}else if(piece.getType() == PieceType.BLUE) {
+			
+		}else if(piece.getType() == PieceType.RKING) {
+			
+		}else if(piece.getType() == PieceType.BKING) {
+			
+		}
+		
+		return new MoveResult(MoveType.NONE, piece);
+	}
+	
 	/**
 	 * converts pixels to board locations
 	 * 
@@ -256,6 +274,10 @@ public class GraphicsDriver extends Application {
 				Piece otherPiece = result.getPiece();
 				board[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 				pieceGroup.getChildren().remove(otherPiece);
+				//checks MultiJump
+				if(tryMultiJump(piece, newX, newY).getType() == MoveType.KILL) {
+					
+				}
 				// checks if either team has won
 				if (checkRedWin()) {
 
