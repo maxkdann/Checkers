@@ -142,7 +142,7 @@ public class GraphicsDriver extends Application {
 			}
 
 			// if all above booleans return false the move is approved
-			Piece.turn.setTurn();
+			Piece.turn.incTurn();
 			return new MoveResult(MoveType.NORMAL);
 		} else if (Math.abs(newX - x0) == 2 && newY - y0 == piece.getType().moveDir * 2) {
 
@@ -150,7 +150,7 @@ public class GraphicsDriver extends Application {
 			int y1 = y0 + (newY - y0) / 2;
 			// jump move
 			if (board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType()) {
-				Piece.turn.setTurn();
+				Piece.turn.incTurn();
 				return new MoveResult(MoveType.KILL, board[x1][y1].getPiece());
 			}
 		}
@@ -158,22 +158,35 @@ public class GraphicsDriver extends Application {
 		return new MoveResult(MoveType.NONE);
 	}
 
-	private MoveResult tryMultiJump(Piece piece, int newX, int newY) {
+	private void tryMultiJump(Piece piece, int newX, int newY) {
+		int turn = Piece.turn.getTurn();		
 		if(piece.getType() == PieceType.RED) {
-			if(newX<6 && newY<6) {
-				if(board[newX+1][newY+1].noPiece() && board[newX+2][newY+2].hasPiece() && board[newX+2][newY+2].getPiece().getType()!=piece.getType()) {
-					return new MoveResult(MoveType.KILL, piece);
+			if(newX<6 && newY>1) {
+				if(board[newX+2][newY-2].noPiece() && board[newX+1][newY-1].hasPiece() && board[newX+1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+				}
+			}else if(newX>1 && newY>1) {
+				if(board[newX-2][newY-2].noPiece() && board[newX-1][newY-1].hasPiece() && board[newX-1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+
 				}
 			}
 		}else if(piece.getType() == PieceType.BLUE) {
-			
+			if(newX<6 && newY<6) {
+				if(board[newX+2][newY+2].noPiece() && board[newX+1][newY+1].hasPiece() && board[newX+1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+				}
+			}else if(newX>1 && newY<6) {
+				if(board[newX-2][newY+2].noPiece() && board[newX-1][newY+1].hasPiece() && board[newX-1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+				}
+			}
 		}else if(piece.getType() == PieceType.RKING) {
 			
 		}else if(piece.getType() == PieceType.BKING) {
 			
 		}
 		
-		return new MoveResult(MoveType.NONE, piece);
 	}
 	
 	/**
@@ -275,9 +288,7 @@ public class GraphicsDriver extends Application {
 				board[toBoard(otherPiece.getOldX())][toBoard(otherPiece.getOldY())].setPiece(null);
 				pieceGroup.getChildren().remove(otherPiece);
 				//checks MultiJump
-				if(tryMultiJump(piece, newX, newY).getType() == MoveType.KILL) {
-					
-				}
+				tryMultiJump(piece, newX, newY);
 				// checks if either team has won
 				if (checkRedWin()) {
 

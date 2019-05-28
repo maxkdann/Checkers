@@ -9,8 +9,16 @@ public class Turn {
 	}
 
 
-	public void setTurn() {
+	public void incTurn() {
 		turn++;
+	}
+	
+	public void setTurn(int newTurn) {
+		turn = newTurn;
+	}
+	
+	public void resetTurn() {
+		turn--;
 	}
 	
 	public int getTurn() {
