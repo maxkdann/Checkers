@@ -158,37 +158,41 @@ public class GraphicsDriver extends Application {
 		return new MoveResult(MoveType.NONE);
 	}
 
-	private void tryMultiJump(Piece piece, int newX, int newY) {
+	private boolean tryMultiJump(Piece piece, int newX, int newY) {
 		int turn = Piece.turn.getTurn();		
 		if(piece.getType() == PieceType.RED) {
 			if(newX<6 && newY>1) {
 				if(board[newX+2][newY-2].noPiece() && board[newX+1][newY-1].hasPiece() && board[newX+1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
+					return true;
 				}
 			}
 			if(newX>1 && newY>1) {
 				if(board[newX-2][newY-2].noPiece() && board[newX-1][newY-1].hasPiece() && board[newX-1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
+					return true;
 				}
 			}
 		}else if(piece.getType() == PieceType.BLUE) {
 			if(newX<6 && newY<6) {
 				if(board[newX+2][newY+2].noPiece() && board[newX+1][newY+1].hasPiece() && board[newX+1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
+					return true;
 				}
 			}
 			
 			if(newX>1 && newY<6) {
 				if(board[newX-2][newY+2].noPiece() && board[newX-1][newY+1].hasPiece() && board[newX-1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
+					return true;
 				}
 			}
 		}else if(piece.getType() == PieceType.RKING) {
-			
+			return true;
 		}else if(piece.getType() == PieceType.BKING) {
-			
+			return true;
 		}
-		
+		return false;
 	}
 	
 	/**
