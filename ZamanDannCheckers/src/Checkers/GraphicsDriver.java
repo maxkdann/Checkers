@@ -165,10 +165,10 @@ public class GraphicsDriver extends Application {
 				if(board[newX+2][newY-2].noPiece() && board[newX+1][newY-1].hasPiece() && board[newX+1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
 				}
-			}else if(newX>1 && newY>1) {
+			}
+			if(newX>1 && newY>1) {
 				if(board[newX-2][newY-2].noPiece() && board[newX-1][newY-1].hasPiece() && board[newX-1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
-
 				}
 			}
 		}else if(piece.getType() == PieceType.BLUE) {
@@ -176,7 +176,9 @@ public class GraphicsDriver extends Application {
 				if(board[newX+2][newY+2].noPiece() && board[newX+1][newY+1].hasPiece() && board[newX+1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
 				}
-			}else if(newX>1 && newY<6) {
+			}
+			
+			if(newX>1 && newY<6) {
 				if(board[newX-2][newY+2].noPiece() && board[newX-1][newY+1].hasPiece() && board[newX-1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
 				}
