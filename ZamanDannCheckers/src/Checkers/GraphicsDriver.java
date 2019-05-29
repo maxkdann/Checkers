@@ -15,7 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-//aa
+
+//a
 /**
  * Checkers
  * 
