@@ -45,13 +45,6 @@ public class Piece extends StackPane {
 		return oldY;
 	}
 	
-	public boolean hasJustJumped(boolean jump) {
-		if(jump) {
-			return true;
-		}
-		
-		return false;
-	}
 
 	/**
 	 * make a default piece
@@ -89,6 +82,7 @@ public class Piece extends StackPane {
 				relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
 			}
 			
+			
 
 		});
 
@@ -111,5 +105,9 @@ public class Piece extends StackPane {
 	 */
 	public void abortMove() {
 		relocate(oldX, oldY);
+	}
+	
+	public void setKing() {
+		type = PieceType.RKING;
 	}
 }

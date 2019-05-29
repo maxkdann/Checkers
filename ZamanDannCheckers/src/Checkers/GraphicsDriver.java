@@ -266,6 +266,7 @@ public class GraphicsDriver extends Application {
 			// get new location of piece
 			int newX = toBoard(piece.getLayoutX());
 			int newY = toBoard(piece.getLayoutY());
+			
 
 			// try to move the piece there
 			MoveResult result = tryMove(piece, newX, newY);
@@ -284,6 +285,15 @@ public class GraphicsDriver extends Application {
 				piece.move(newX, newY);
 				board[x0][y0].setPiece(null);
 				board[newX][newY].setPiece(piece);
+				if(newY==0&&piece.getType()==PieceType.RED) {
+					
+					piece.setRKing();
+				}
+				if(newY==7&&piece.getType()==PieceType.BLUE) {
+					
+					piece.setBKing();
+				}
+				
 				break;
 			case KILL:
 				// move the piece as well as delete the opponent's piece
@@ -305,12 +315,21 @@ public class GraphicsDriver extends Application {
 
 					winScreen.display("Blue");
 				}
+				if(newY==0&&piece.getType()==PieceType.RED) {
+					System.out.println("new");
+					piece.setRKing();
+				}
+				
+if(newY==7&&piece.getType()==PieceType.BLUE) {
+					
+					piece.setBKing();
+				}
 
 				break;
 
 			}
 		});
-
+		
 		return piece;
 	}
 
