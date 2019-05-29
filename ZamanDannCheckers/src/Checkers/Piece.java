@@ -107,7 +107,11 @@ public class Piece extends StackPane {
 		relocate(oldX, oldY);
 	}
 	
-	public void setKing() {
+	public void setRKing() {
 		type = PieceType.RKING;
+	}
+	
+	public void setBKing() {
+		type = PieceType.BKING;
 	}
 }
