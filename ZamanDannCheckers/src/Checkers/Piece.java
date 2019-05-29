@@ -44,6 +44,14 @@ public class Piece extends StackPane {
 	public double getOldY() {
 		return oldY;
 	}
+	
+	public boolean hasJustJumped(boolean jump) {
+		if(jump) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	/**
 	 * make a default piece
