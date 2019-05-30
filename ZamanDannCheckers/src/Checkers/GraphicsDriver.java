@@ -276,7 +276,7 @@ public class GraphicsDriver extends Application {
 					return true;
 				}
 			}
-			
+		
 			if(newX>1 && newY<6) {
 				if(board[newX-2][newY+2].noPiece() && board[newX-1][newY+1].hasPiece() && board[newX-1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
 					Piece.turn.setTurn(turn-1);
@@ -409,11 +409,13 @@ public class GraphicsDriver extends Application {
 				if(newY==0&&piece.getType()==PieceType.RED) {
 					System.out.println("new");
 					piece.setRKing();
+					piece.changeColorRKING();
 				}
 				
 				if(newY==7&&piece.getType()==PieceType.BLUE) {
 					System.out.println("new");
 					piece.setBKing();
+					piece.changeColorBKING();
 				}
 
 				break;
