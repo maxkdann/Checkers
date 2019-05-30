@@ -103,19 +103,68 @@ public class GraphicsDriver extends Application {
 		int y0 = toBoard(piece.getOldY());
 		// normal move
 
-		if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
+		if(piece.getType()==PieceType.BKING || piece.getType()==PieceType.RKING) {
+			if(Math.abs(newX - x0) == 1) {
+				// This if() tree forces your move if you have the option to kill; avoid looking
+				// at it if u value your sanity
+				if (newY > y0 && newY < 7) {
+					if (newX > x0 && x0 > 2) {
+						if (board[newX - 2][newY].hasPiece()
+								&& board[newX - 2][newY].getPiece().getType() != piece.getType()
+								&& board[newX - 3][newY + 1].noPiece()) {
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+					if (newX < x0 && x0 < 5) {
+						if (board[newX + 2][newY].hasPiece()
+								&& board[newX + 2][newY].getPiece().getType() != piece.getType()
+								&& board[newX + 3][newY + 1].noPiece()) {
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+				}
+				if (newY < y0 && newY > 0) {
+					if (newX > x0 && x0 > 2) {
+						if (board[newX - 2][newY].hasPiece()
+								&& board[newX - 2][newY].getPiece().getType() != piece.getType()
+								&& board[newX - 3][newY - 1].noPiece()) {
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+
+					if (newX < x0 && x0 < 5) {
+						if (board[newX + 2][newY].hasPiece()
+								&& board[newX + 2][newY].getPiece().getType() != piece.getType()
+								&& board[newX + 3][newY - 1].noPiece()) {
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+
+				}
+				
+				Piece.turn.incTurn();
+				return new MoveResult(MoveType.NORMAL);
+			}else if(Math.abs(newX - x0) == 2) {
+				int x1 = x0 + (newX - x0) / 2;
+				int y1 = y0 + (newY - y0) / 2;
+				if(board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType()) {
+					Piece.turn.incTurn();
+					return new MoveResult(MoveType.KILL, board[x1][y1].getPiece());
+				}
+			}
+		}else if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
 
 			// This if() tree forces your move if you have the option to kill; avoid looking
 			// at it if u value your sanity
-			if (newY > y0 && y0 < 7) {
-				if (newX > x0 && x0 > 1) {
+			if (newY > y0 && newY < 7) {
+				if (newX > x0 && x0 > 2) {
 					if (board[newX - 2][newY].hasPiece()
 							&& board[newX - 2][newY].getPiece().getType() != piece.getType()
 							&& board[newX - 3][newY + 1].noPiece()) {
 						return new MoveResult(MoveType.NONE);
 					}
 				}
-				if (newX < x0 && x0 < 6) {
+				if (newX < x0 && x0 < 5) {
 					if (board[newX + 2][newY].hasPiece()
 							&& board[newX + 2][newY].getPiece().getType() != piece.getType()
 							&& board[newX + 3][newY + 1].noPiece()) {
@@ -123,8 +172,8 @@ public class GraphicsDriver extends Application {
 					}
 				}
 			}
-			if (newY < y0 && y0 > 0) {
-				if (newX > x0 && x0 > 1) {
+			if (newY < y0 && newY > 0) {
+				if (newX > x0 && x0 > 2) {
 					if (board[newX - 2][newY].hasPiece()
 							&& board[newX - 2][newY].getPiece().getType() != piece.getType()
 							&& board[newX - 3][newY - 1].noPiece()) {
@@ -132,7 +181,7 @@ public class GraphicsDriver extends Application {
 					}
 				}
 
-				if (newX < x0 && x0 < 6) {
+				if (newX < x0 && x0 < 5) {
 					if (board[newX + 2][newY].hasPiece()
 							&& board[newX + 2][newY].getPiece().getType() != piece.getType()
 							&& board[newX + 3][newY - 1].noPiece()) {
@@ -320,8 +369,8 @@ public class GraphicsDriver extends Application {
 					piece.setRKing();
 				}
 				
-if(newY==7&&piece.getType()==PieceType.BLUE) {
-					
+				if(newY==7&&piece.getType()==PieceType.BLUE) {
+					System.out.println("new");
 					piece.setBKing();
 				}
 
