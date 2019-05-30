@@ -105,26 +105,22 @@ public class GraphicsDriver extends Application {
 
 		if(piece.getType()==PieceType.BKING || piece.getType()==PieceType.RKING) {
 			if(Math.abs(newX - x0) == 1) {
-				// This if() tree forces your move if you have the option to kill; avoid looking
-				// at it if u value your sanity
-				if (newY > y0 && newY < 7) {
-					if (newX > x0 && x0 > 2) {
+				if (newY>0 && newY < 7) {
+					if (newX > 2) {
 						if (board[newX - 2][newY].hasPiece()
 								&& board[newX - 2][newY].getPiece().getType() != piece.getType()
 								&& board[newX - 3][newY + 1].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
-					if (newX < x0 && x0 < 5) {
+					if (newX < 5) {
 						if (board[newX + 2][newY].hasPiece()
 								&& board[newX + 2][newY].getPiece().getType() != piece.getType()
 								&& board[newX + 3][newY + 1].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
-				}
-				if (newY < y0 && newY > 0) {
-					if (newX > x0 && x0 > 2) {
+					if (newX > 2) {
 						if (board[newX - 2][newY].hasPiece()
 								&& board[newX - 2][newY].getPiece().getType() != piece.getType()
 								&& board[newX - 3][newY - 1].noPiece()) {
@@ -132,16 +128,14 @@ public class GraphicsDriver extends Application {
 						}
 					}
 
-					if (newX < x0 && x0 < 5) {
+					if (newX < 5) {
 						if (board[newX + 2][newY].hasPiece()
 								&& board[newX + 2][newY].getPiece().getType() != piece.getType()
 								&& board[newX + 3][newY - 1].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
-
 				}
-				
 				Piece.turn.incTurn();
 				return new MoveResult(MoveType.NORMAL);
 			}else if(Math.abs(newX - x0) == 2) {
@@ -238,9 +232,57 @@ public class GraphicsDriver extends Application {
 				}
 			}
 		}else if(piece.getType() == PieceType.RKING) {
-			return true;
+			if(newX<6 && newY>1) {
+				if(board[newX+2][newY-2].noPiece() && board[newX+1][newY-1].hasPiece() && board[newX+1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
+			if(newX>1 && newY>1) {
+				if(board[newX-2][newY-2].noPiece() && board[newX-1][newY-1].hasPiece() && board[newX-1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
+			if(newX<6 && newY<6) {
+				if(board[newX+2][newY+2].noPiece() && board[newX+1][newY+1].hasPiece() && board[newX+1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
+			
+			if(newX>1 && newY<6) {
+				if(board[newX-2][newY+2].noPiece() && board[newX-1][newY+1].hasPiece() && board[newX-1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
 		}else if(piece.getType() == PieceType.BKING) {
-			return true;
+			if(newX<6 && newY>1) {
+				if(board[newX+2][newY-2].noPiece() && board[newX+1][newY-1].hasPiece() && board[newX+1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
+			if(newX>1 && newY>1) {
+				if(board[newX-2][newY-2].noPiece() && board[newX-1][newY-1].hasPiece() && board[newX-1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
+			if(newX<6 && newY<6) {
+				if(board[newX+2][newY+2].noPiece() && board[newX+1][newY+1].hasPiece() && board[newX+1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
+			
+			if(newX>1 && newY<6) {
+				if(board[newX-2][newY+2].noPiece() && board[newX-1][newY+1].hasPiece() && board[newX-1][newY+1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {
+					Piece.turn.setTurn(turn-1);
+					return true;
+				}
+			}
 		}
 		return false;
 	}
