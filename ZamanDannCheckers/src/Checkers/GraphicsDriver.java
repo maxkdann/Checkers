@@ -377,12 +377,12 @@ public class GraphicsDriver extends Application {
 				board[x0][y0].setPiece(null);
 				board[newX][newY].setPiece(piece);
 				if(newY==0&&piece.getType()==PieceType.RED) {
-					
 					piece.setRKing();
+					piece.changeColorRKING();
 				}
 				if(newY==7&&piece.getType()==PieceType.BLUE) {
-					
 					piece.setBKing();
+					piece.changeColorBKING();
 				}
 				
 				break;
@@ -407,13 +407,11 @@ public class GraphicsDriver extends Application {
 					winScreen.display("Blue");
 				}
 				if(newY==0&&piece.getType()==PieceType.RED) {
-					System.out.println("new");
 					piece.setRKing();
 					piece.changeColorRKING();
 				}
 				
 				if(newY==7&&piece.getType()==PieceType.BLUE) {
-					System.out.println("new");
 					piece.setBKing();
 					piece.changeColorBKING();
 				}
