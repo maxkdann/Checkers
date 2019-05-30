@@ -17,10 +17,6 @@ public class Turn {
 		turn = newTurn;
 	}
 	
-	public void resetTurn() {
-		turn--;
-	}
-	
 	public int getTurn() {
 		return turn;
 	}
