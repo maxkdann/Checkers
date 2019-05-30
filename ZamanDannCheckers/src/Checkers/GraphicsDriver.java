@@ -105,33 +105,26 @@ public class GraphicsDriver extends Application {
 		//forced moves for kings
 		if(piece.getType()==PieceType.BKING || piece.getType()==PieceType.RKING) {
 			if(Math.abs(newX - x0) == 1) {
-				if (newY>0 && newY < 7) {
-					if (newX > 2) {
-						if (board[newX - 2][newY].hasPiece()
-								&& board[newX - 2][newY].getPiece().getType() != piece.getType()
-								&& board[newX - 3][newY + 1].noPiece()) {
+				if (y0>1 && y0<6) {
+					if (x0 > 1) {
+						if (board[x0 - 1][y0 + 1].hasPiece() && board[x0 - 1][y0 + 1].getPiece().getType() != piece.getType() && board[x0 - 2][y0 + 2].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
-					if (newX < 5) {
-						if (board[newX + 2][newY].hasPiece()
-								&& board[newX + 2][newY].getPiece().getType() != piece.getType()
-								&& board[newX + 3][newY + 1].noPiece()) {
+					if (x0 < 6) {
+						if (board[x0 + 1][y0 + 1].hasPiece()
+								&& board[x0 + 1][y0 + 1].getPiece().getType() != piece.getType()
+								&& board[x0+2][y0 + 2].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
-					if (newX > 2) {
-						if (board[newX - 2][newY].hasPiece()
-								&& board[newX - 2][newY].getPiece().getType() != piece.getType()
-								&& board[newX - 3][newY - 1].noPiece()) {
+					if (x0 > 1) {
+						if (board[x0 - 1][y0 - 1].hasPiece() && board[x0 - 1][y0 - 1].getPiece().getType() != piece.getType() && board[x0 - 2][y0 - 2].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
-
-					if (newX < 5) {
-						if (board[newX + 2][newY].hasPiece()
-								&& board[newX + 2][newY].getPiece().getType() != piece.getType()
-								&& board[newX + 3][newY - 1].noPiece()) {
+					if (x0 < 6) {
+						if (board[x0 + 1][y0 - 1].hasPiece() && board[x0 + 1][y0 - 1].getPiece().getType() != piece.getType() && board[x0+2][y0 - 2].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
@@ -141,9 +134,16 @@ public class GraphicsDriver extends Application {
 			}else if(Math.abs(newX - x0) == 2) {
 				int x1 = x0 + (newX - x0) / 2;
 				int y1 = y0 + (newY - y0) / 2;
-				if(board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType()) {
-					Piece.turn.incTurn();
-					return new MoveResult(MoveType.KILL, board[x1][y1].getPiece());
+				if(piece.getType()==PieceType.RKING) {
+					if(board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType() && board[x1][y1].getPiece().getType() != PieceType.RED) {
+						Piece.turn.incTurn();
+						return new MoveResult(MoveType.KILL, board[x1][y1].getPiece());
+					}
+				}else if(piece.getType()==PieceType.BKING){
+					if(board[x1][y1].hasPiece() && board[x1][y1].getPiece().getType() != piece.getType() && board[x1][y1].getPiece().getType() != PieceType.BLUE) {
+						Piece.turn.incTurn();
+						return new MoveResult(MoveType.KILL, board[x1][y1].getPiece());
+					}
 				}
 			}
 		}else if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
