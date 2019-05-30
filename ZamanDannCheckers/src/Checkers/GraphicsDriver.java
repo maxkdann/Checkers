@@ -101,8 +101,8 @@ public class GraphicsDriver extends Application {
 		// store piece location before move
 		int x0 = toBoard(piece.getOldX());
 		int y0 = toBoard(piece.getOldY());
-		// normal move
 
+		//forced moves for kings
 		if(piece.getType()==PieceType.BKING || piece.getType()==PieceType.RKING) {
 			if(Math.abs(newX - x0) == 1) {
 				if (newY>0 && newY < 7) {
@@ -148,37 +148,28 @@ public class GraphicsDriver extends Application {
 			}
 		}else if (Math.abs(newX - x0) == 1 && newY - y0 == piece.getType().moveDir) {
 
-			// This if() tree forces your move if you have the option to kill; avoid looking
-			// at it if u value your sanity
+			// This if() tree forces your move if you have the option to kill
 			if (newY > y0 && newY < 7) {
 				if (newX > x0 && x0 > 2) {
-					if (board[newX - 2][newY].hasPiece()
-							&& board[newX - 2][newY].getPiece().getType() != piece.getType()
-							&& board[newX - 3][newY + 1].noPiece()) {
+					if (board[newX - 2][newY].hasPiece() && board[newX - 2][newY].getPiece().getType() != piece.getType() && board[newX - 3][newY + 1].noPiece()) {
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 				if (newX < x0 && x0 < 5) {
-					if (board[newX + 2][newY].hasPiece()
-							&& board[newX + 2][newY].getPiece().getType() != piece.getType()
-							&& board[newX + 3][newY + 1].noPiece()) {
+					if (board[newX + 2][newY].hasPiece() && board[newX + 2][newY].getPiece().getType() != piece.getType() && board[newX + 3][newY + 1].noPiece()) {
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 			}
 			if (newY < y0 && newY > 0) {
 				if (newX > x0 && x0 > 2) {
-					if (board[newX - 2][newY].hasPiece()
-							&& board[newX - 2][newY].getPiece().getType() != piece.getType()
-							&& board[newX - 3][newY - 1].noPiece()) {
+					if (board[newX - 2][newY].hasPiece() && board[newX - 2][newY].getPiece().getType() != piece.getType() && board[newX - 3][newY - 1].noPiece()) {
 						return new MoveResult(MoveType.NONE);
 					}
 				}
 
 				if (newX < x0 && x0 < 5) {
-					if (board[newX + 2][newY].hasPiece()
-							&& board[newX + 2][newY].getPiece().getType() != piece.getType()
-							&& board[newX + 3][newY - 1].noPiece()) {
+					if (board[newX + 2][newY].hasPiece() && board[newX + 2][newY].getPiece().getType() != piece.getType() && board[newX + 3][newY - 1].noPiece()) {
 						return new MoveResult(MoveType.NONE);
 					}
 				}
@@ -201,9 +192,18 @@ public class GraphicsDriver extends Application {
 
 		return new MoveResult(MoveType.NONE);
 	}
-
+	
+	/** 
+	 * Checks if a multijump opportunity is there and resets the turn by 1 if it is.
+	 * @param piece selected piece
+	 * @param newX new x location on board
+	 * @param newY new y location on board
+	 * @return whether a multijump occurred 
+	 */
 	private boolean tryMultiJump(Piece piece, int newX, int newY) {
+		//stores turn
 		int turn = Piece.turn.getTurn();		
+		//don't look close this method
 		if(piece.getType() == PieceType.RED) {
 			if(newX<6 && newY>1) {
 				if(board[newX+2][newY-2].noPiece() && board[newX+1][newY-1].hasPiece() && board[newX+1][newY-1].getPiece().getType()!=board[newX][newY].getPiece().getType()) {

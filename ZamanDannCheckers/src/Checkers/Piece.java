@@ -10,6 +10,7 @@ import javafx.scene.shape.Ellipse;
 public class Piece extends StackPane {
 	//Creates turn counter  object
 	public static Turn turn = new Turn();
+	//Creates ellipse object for pieces
 	Ellipse ellipse = new Ellipse(TILE_SIZE * 0.25, TILE_SIZE * 0.25);
 
 	private PieceType type;
@@ -58,7 +59,7 @@ public class Piece extends StackPane {
 		this.type = type;
 		// put all pieces on separate tiles
 		move(x, y);
-		// create a circle and fill it either red or white
+		// Fills ellipses red or blue based on piecetype
 		ellipse.setFill(type == PieceType.RED ? Color.valueOf("#c40003") : Color.valueOf("#0000ff"));
 		// outline in black
 		ellipse.setStroke(Color.BLACK);
@@ -100,10 +101,16 @@ public class Piece extends StackPane {
 		relocate(oldX, oldY);
 	}
 	
+	/**
+	 * Changes piece color to dark red if it's a red king
+	 */
 	public void changeColorRKING() {
 		ellipse.setFill(Color.DARKRED);
 	}
 	
+	/**
+	 * Changes piece color to dark blue if it's a blue king
+	 */
 	public void changeColorBKING() {
 		ellipse.setFill(Color.DARKBLUE);
 	}
