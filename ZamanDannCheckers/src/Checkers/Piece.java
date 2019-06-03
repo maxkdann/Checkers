@@ -101,6 +101,10 @@ public class Piece extends StackPane {
 		relocate(oldX, oldY);
 	}
 	
+	public void disable() {
+		ellipse.setDisable(true);
+	}
+	
 	/**
 	 * Changes piece color to dark red if it's a red king
 	 */

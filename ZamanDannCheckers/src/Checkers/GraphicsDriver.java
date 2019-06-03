@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * Checkers
  * 
  * @author Kiyan Zaman and Max Dann
- * @version 1.0
+ * @version 1.71
  */
 public class GraphicsDriver extends Application {
 	// set the dimensions of the tiles
@@ -105,19 +105,7 @@ public class GraphicsDriver extends Application {
 		//forced moves for kings
 		if(piece.getType()==PieceType.BKING || piece.getType()==PieceType.RKING) {
 			if(Math.abs(newX - x0) == 1) {
-				if (y0>1 && y0<6) {
-					if (x0 > 1) {
-						if (board[x0 - 1][y0 + 1].hasPiece() && board[x0 - 1][y0 + 1].getPiece().getType() != piece.getType() && board[x0 - 2][y0 + 2].noPiece()) {
-							return new MoveResult(MoveType.NONE);
-						}
-					}
-					if (x0 < 6) {
-						if (board[x0 + 1][y0 + 1].hasPiece()
-								&& board[x0 + 1][y0 + 1].getPiece().getType() != piece.getType()
-								&& board[x0+2][y0 + 2].noPiece()) {
-							return new MoveResult(MoveType.NONE);
-						}
-					}
+				if (y0>1) {
 					if (x0 > 1) {
 						if (board[x0 - 1][y0 - 1].hasPiece() && board[x0 - 1][y0 - 1].getPiece().getType() != piece.getType() && board[x0 - 2][y0 - 2].noPiece()) {
 							return new MoveResult(MoveType.NONE);
@@ -125,6 +113,18 @@ public class GraphicsDriver extends Application {
 					}
 					if (x0 < 6) {
 						if (board[x0 + 1][y0 - 1].hasPiece() && board[x0 + 1][y0 - 1].getPiece().getType() != piece.getType() && board[x0+2][y0 - 2].noPiece()) {
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+				}
+				if (y0<6) {
+					if (x0 > 1) {
+						if (board[x0 - 1][y0 + 1].hasPiece() && board[x0 - 1][y0 + 1].getPiece().getType() != piece.getType() && board[x0 - 2][y0 + 2].noPiece()) {
+							return new MoveResult(MoveType.NONE);
+						}
+					}
+					if (x0 < 6) {
+						if (board[x0 + 1][y0 + 1].hasPiece() && board[x0 + 1][y0 + 1].getPiece().getType() != piece.getType() && board[x0+2][y0 + 2].noPiece()) {
 							return new MoveResult(MoveType.NONE);
 						}
 					}
