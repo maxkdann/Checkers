@@ -33,12 +33,13 @@ public class GraphicsDriver extends Application {
 	// create groups to stores tiles as well as pieces
 	private Group tileGroup = new Group();
 	private Group pieceGroup = new Group();
+	//at the start of the game no one has won
 	public static boolean win = false;
 
 	/**
 	 * Creates pieces on the board
 	 * 
-	 * @return
+	 * @return the pane for which the board is on
 	 */
 	private Parent createContent() {
 		// create a pane based on the size of the board
