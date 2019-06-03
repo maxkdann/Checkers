@@ -28,7 +28,7 @@ public class Piece extends StackPane {
 	public PieceType getType() {
 		return type;
 	}
-
+	//a
 	/**
 	 * get's the x position of the piece before it was moved
 	 * 
